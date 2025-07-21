@@ -1,0 +1,98 @@
+[
+  {
+    "symbol": "RELIANCE.NS",
+    "name": "Reliance Industries",
+    "sector": "Energy",
+    "exchange": "NSE",
+    "purchasePrice": 2450,
+    "quantity": 10
+  },
+  {
+    "symbol": "TCS.NS",
+    "name": "Tata Consultancy Services",
+    "sector": "Technology",
+    "exchange": "NSE",
+    "purchasePrice": 3500,
+    "quantity": 5
+  },
+  {
+    "symbol": "HDFCBANK.NS",
+    "name": "HDFC Bank",
+    "sector": "Financials",
+    "exchange": "NSE",
+    "purchasePrice": 1550,
+    "quantity": 12
+  },
+  {
+    "symbol": "INFY.NS",
+    "name": "Infosys",
+    "sector": "Technology",
+    "exchange": "NSE",
+    "purchasePrice": 1400,
+    "quantity": 8
+  },
+  {
+    "symbol": "ITC.NS",
+    "name": "ITC",
+    "sector": "Consumer Goods",
+    "exchange": "NSE",
+    "purchasePrice": 420,
+    "quantity": 20
+  },
+  {
+    "symbol": "BAJFINANCE.NS",
+    "name": "Bajaj Finance",
+    "sector": "Financials",
+    "exchange": "NSE",
+    "purchasePrice": 7000,
+    "quantity": 2
+  },
+  {
+    "symbol": "SBIN.NS",
+    "name": "State Bank of India",
+    "sector": "Financials",
+    "exchange": "NSE",
+    "purchasePrice": 600,
+    "quantity": 15
+  },
+  {
+    "symbol": "HINDUNILVR.NS",
+    "name": "Hindustan Unilever",
+    "sector": "Consumer Goods",
+    "exchange": "NSE",
+    "purchasePrice": 2500,
+    "quantity": 4
+  },
+  {
+    "symbol": "MARUTI.NS",
+    "name": "Maruti Suzuki",
+    "sector": "Automobile",
+    "exchange": "NSE",
+    "purchasePrice": 9500,
+    "quantity": 1
+  },
+  {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "sector": "Technology",
+    "exchange": "NASDAQ",
+    "purchasePrice": 170,
+    "quantity": 6
+  },
+  {
+    "symbol": "GOOG",
+    "name": "Alphabet Inc.",
+    "sector": "Technology",
+    "exchange": "NASDAQ",
+    "purchasePrice": 120,
+    "quantity": 3
+  },
+  {
+    "symbol": "MSFT",
+    "name": "Microsoft Corporation",
+    "sector": "Technology",
+    "exchange": "NASDAQ",
+    "purchasePrice": 300,
+    "quantity": 4
+  }
+]
