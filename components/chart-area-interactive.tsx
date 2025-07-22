@@ -12,8 +12,16 @@ import {
   Legend,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { IconClock } from "@tabler/icons-react";
 
-export function ChartAreaInteractive({ data = [] }: { data: any[] }) {
+export function ChartAreaInteractive({
+  data = [],
+  lastUpdated,
+}: {
+  data: any[];
+  lastUpdated: Date | null;
+}) {
   // Prepare chart data: X = stock name, Y = investment/presentValue
   const chartData = data.map((row) => ({
     name: row.name,
@@ -24,8 +32,26 @@ export function ChartAreaInteractive({ data = [] }: { data: any[] }) {
 
   return (
     <Card className="@container/card">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-lg sm:text-xl">Portfolio Overview</CardTitle>
+        {lastUpdated && (
+          <div className="flex items-center gap-1.5">
+            <div className="text-xs text-muted-foreground/70 flex items-center gap-1 hover:text-muted-foreground transition-colors">
+              <span className="text-[11px] tracking-tight">Live</span>
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/70 animate-pulse" />
+            </div>
+            <div className="h-3 w-[1px] bg-border/40" />
+            <div className="text-xs text-muted-foreground/60 flex items-center gap-1">
+              <IconClock className="h-3 w-3" strokeWidth={1.5} />
+              <span className="text-[11px] tracking-tight">
+                {lastUpdated.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </span>
+            </div>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="pt-2 pb-4">
         {chartData.length === 0 ? (

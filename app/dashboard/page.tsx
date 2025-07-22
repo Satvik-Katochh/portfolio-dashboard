@@ -5,6 +5,8 @@ import { DataTable } from "@/components/data-table";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
+import { SectionCards } from "@/components/section-cards";
+import { IconClock } from "@tabler/icons-react";
 
 import React, { useEffect, useState } from "react";
 import portfolio from "./portfolio.json";
@@ -12,6 +14,7 @@ import portfolio from "./portfolio.json";
 export default function Page() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   // Separate effect for initial loading state
   useEffect(() => {
@@ -63,6 +66,7 @@ export default function Page() {
         }));
 
         setData(withPortfolioPct);
+        setLastUpdated(new Date()); // Update timestamp when new data arrives
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -94,6 +98,8 @@ export default function Page() {
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <SectionCards />
+
               <div className="px-4 lg:px-6">
                 <ChartAreaInteractive data={data} />
               </div>
