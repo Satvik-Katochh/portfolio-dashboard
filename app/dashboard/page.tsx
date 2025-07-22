@@ -10,24 +10,37 @@ import React, { useEffect, useState } from "react";
 import portfolio from "./portfolio.json";
 
 export default function Page() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Separate effect for initial loading state
+  useEffect(() => {
+    if (data.length > 0) {
+      setLoading(false);
+    }
+  }, [data]);
 
   useEffect(() => {
     const symbols = portfolio.map((stock) => stock.symbol).join(",");
     const apiUrl = `/api/stocks?symbols=${symbols}`;
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((apiData) => {
+
+    const fetchData = async () => {
+      try {
+        const res = await fetch(apiUrl);
+        const apiData = await res.json();
+
         // Merge by symbol
         const merged = portfolio.map((stock) => {
           const live =
-            (apiData.data || []).find((item) => item.symbol === stock.symbol) ||
-            {};
+            (apiData.data || []).find(
+              (i: { symbol: string }) => i.symbol === stock.symbol
+            ) || {};
+
           // Calculate derived fields
           const investment = stock.purchasePrice * stock.quantity;
           const presentValue = (live.cmp || 0) * stock.quantity;
           const gainLoss = presentValue - investment;
+
           return {
             ...stock,
             ...live,
@@ -36,6 +49,7 @@ export default function Page() {
             gainLoss,
           };
         });
+
         // Calculate total investment for Portfolio %
         const totalInvestment = merged.reduce(
           (sum, s) => sum + s.investment,
@@ -47,10 +61,22 @@ export default function Page() {
             ? ((s.investment / totalInvestment) * 100).toFixed(2)
             : "0.00",
         }));
+
         setData(withPortfolioPct);
-        setLoading(false);
-      });
-  }, []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    // Initial fetch
+    fetchData();
+
+    // Set up polling interval (15 seconds)
+    const intervalId = setInterval(fetchData, 15000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array as we don't need to track any values
 
   if (loading) return <div>Loading...</div>;
   return (
