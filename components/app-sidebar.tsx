@@ -2,21 +2,33 @@
 
 import * as React from "react";
 import {
-  IconCamera,
   IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconListDetails,
+  IconTrendingUp,
   IconReport,
-  IconSearch,
-  IconSettings,
+  IconDatabase,
+  IconWallet,
+  IconCurrencyRupee,
   IconUsers,
+  IconSettings,
+  IconHelp,
+  IconSearch,
+  IconFileText,
+  IconBriefcase,
+  IconReceipt2,
+  IconFileChart,
+  IconFileDollar,
+  IconFileSpreadsheet,
+  IconFileAnalytics,
+  IconFileInvoice,
+  IconFileReport,
+  IconFileTextAi,
+  IconFileDescription,
+  IconInnerShadowTop,
+  IconBuildingBank,
+  IconHistory,
+  IconCashBanknote,
+  IconReceipt,
+  IconFileStack,
 } from "@tabler/icons-react";
 
 import { NavDocuments } from "@/components/nav-documents";
@@ -35,20 +47,25 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Satvik",
+    email: "katochsatvik@gmail.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "Holdings",
       url: "#",
-      icon: IconDashboard,
+      icon: IconBriefcase,
     },
     {
-      title: "Lifecycle",
+      title: "Transactions",
       url: "#",
-      icon: IconListDetails,
+      icon: IconReceipt2,
+    },
+    {
+      title: "Markets",
+      url: "#",
+      icon: IconTrendingUp,
     },
     {
       title: "Analytics",
@@ -56,61 +73,37 @@ const data = {
       icon: IconChartBar,
     },
     {
-      title: "Projects",
+      title: "Reports",
       url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
+      icon: IconReport,
     },
   ],
   navClouds: [
     {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
+      title: "Holdings",
+      icon: IconBriefcase,
       url: "#",
       items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
+        { title: "All Holdings", url: "#" },
+        { title: "By Sector", url: "#" },
       ],
     },
     {
-      title: "Proposal",
-      icon: IconFileDescription,
+      title: "Transactions",
+      icon: IconReceipt2,
       url: "#",
       items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
+        { title: "All Transactions", url: "#" },
+        { title: "Dividends", url: "#" },
       ],
     },
     {
-      title: "Prompts",
-      icon: IconFileAi,
+      title: "Statements",
+      icon: IconFileChart,
       url: "#",
       items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
+        { title: "Account Statement", url: "#" },
+        { title: "Tax Statement", url: "#" },
       ],
     },
   ],
@@ -138,14 +131,34 @@ const data = {
       icon: IconDatabase,
     },
     {
-      name: "Reports",
+      name: "Statements",
       url: "#",
-      icon: IconReport,
+      icon: IconFileSpreadsheet,
     },
     {
-      name: "Word Assistant",
+      name: "Tax Reports",
       url: "#",
-      icon: IconFileWord,
+      icon: IconFileInvoice,
+    },
+    {
+      name: "Performance",
+      url: "#",
+      icon: IconFileAnalytics,
+    },
+    {
+      name: "Holdings Report",
+      url: "#",
+      icon: IconFileStack,
+    },
+    {
+      name: "Dividends",
+      url: "#",
+      icon: IconCashBanknote,
+    },
+    {
+      name: "Trade History",
+      url: "#",
+      icon: IconHistory,
     },
   ],
 };
@@ -162,16 +175,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">
-                  Orcish Dashboard
-                </span>
+                <span className="text-base font-semibold">8byte Inc.</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain
+          items={data.navMain.filter((item) => item.title !== "Dashboard")}
+        />
         <NavDocuments items={data.documents} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>

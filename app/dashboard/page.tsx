@@ -76,7 +76,7 @@ export default function Page() {
     fetchData();
 
     // Set up polling interval (15 seconds)
-    const intervalId = setInterval(fetchData, 15000);
+    const intervalId = setInterval(fetchData, 150000);
 
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
