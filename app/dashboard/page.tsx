@@ -7,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { SectionCards } from "@/components/section-cards";
 import { IconClock } from "@tabler/icons-react";
+import { Progress } from "@/components/ui/progress";
 
 import React, { useEffect, useState } from "react";
 import portfolio from "./portfolio.json";
@@ -82,7 +83,17 @@ export default function Page() {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array as we don't need to track any values
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] w-full">
+        <div className="flex flex-col items-center gap-4">
+          <Progress value={70} className="w-64 h-3" />
+          <span className="text-muted-foreground text-sm font-medium tracking-wide">
+            Loading dashboard...
+          </span>
+        </div>
+      </div>
+    );
   return (
     <SidebarProvider
       style={
