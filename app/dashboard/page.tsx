@@ -85,7 +85,7 @@ export default function Page() {
 
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-[60vh] w-full">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4">
           <Progress value={70} className="w-64 h-3" />
           <span className="text-muted-foreground text-sm font-medium tracking-wide">
