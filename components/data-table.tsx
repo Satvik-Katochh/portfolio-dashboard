@@ -142,7 +142,7 @@ const columns = [
     header: "Investment",
     cell: (row: any) => (
       <span className="block text-right font-mono tabular-nums rounded bg-muted/20 px-2 py-1">
-        {row.investment?.toLocaleString()}
+        ₹{row.investment?.toLocaleString()}
       </span>
     ),
   },
@@ -176,7 +176,7 @@ const columns = [
     header: "Present Value",
     cell: (row: any) => (
       <span className="block text-right font-mono tabular-nums rounded bg-muted/20 px-2 py-1">
-        {row.presentValue?.toLocaleString()}
+        ₹{row.presentValue?.toLocaleString()}
       </span>
     ),
   },
@@ -191,6 +191,7 @@ const columns = [
         <span
           className={`block text-right font-mono tabular-nums rounded bg-muted/20 px-2 py-1 ${color}`}
         >
+          ₹
           {value?.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,

@@ -1,9 +1,26 @@
 import { NextRequest } from "next/server";
 import yahooFinance from "yahoo-finance2";
 
+// Simple in-memory cache to reduce rate limiting and improve performance
+const cache: Record<string, { data: any; timestamp: number }> = {};
+const CACHE_TTL = 15 * 1000; // 15 seconds
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const symbols = searchParams.get("symbols")?.split(",") || [];
+  const cacheKey = symbols.join(",");
+
+  // Check cache
+  if (
+    cache[cacheKey] &&
+    Date.now() - cache[cacheKey].timestamp < CACHE_TTL
+  ) {
+    return Response.json({
+      data: cache[cacheKey].data,
+      disclaimer:
+        "P/E Ratio and Earnings are mock data. Google Finance does not provide a public API. (CACHED)",
+    });
+  }
 
   const results = await Promise.all(
     symbols.map(async (symbol, idx) => {
@@ -32,6 +49,12 @@ export async function GET(request: NextRequest) {
       }
     })
   );
+
+  // Store in cache
+  cache[cacheKey] = {
+    data: results,
+    timestamp: Date.now(),
+  };
 
   return Response.json({
     data: results,
