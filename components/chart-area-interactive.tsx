@@ -14,6 +14,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { IconClock } from "@tabler/icons-react";
+import { useState, useEffect } from "react";
 
 export function ChartAreaInteractive({
   data = [],
@@ -29,6 +30,14 @@ export function ChartAreaInteractive({
     presentValue: row.presentValue ?? 0,
     gainLoss: row.gainLoss ?? 0,
   }));
+
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 500);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <Card className="@container/card">
@@ -81,29 +90,32 @@ export function ChartAreaInteractive({
               />
               <XAxis
                 dataKey="name"
-                tick={({ x, y, payload }) => {
-                  const label = String(payload.value);
-                  const shortLabel =
-                    label.length > 12 ? label.slice(0, 11) + "…" : label;
-                  return (
-                    <g>
-                      <title>{label}</title>
-                      <text
-                        x={x}
-                        y={y + 10}
-                        textAnchor="end"
-                        fontSize={11}
-                        fill="#a1a1aa"
-                        transform={`rotate(-10,${x},${y + 10})`}
-                        style={{
-                          cursor: label.length > 12 ? "pointer" : "default",
-                        }}
-                      >
-                        {shortLabel}
-                      </text>
-                    </g>
-                  );
-                }}
+                tick={isMobile
+                  ? false
+                  : ({ x, y, payload }) => {
+                      const label = String(payload.value);
+                      const shortLabel =
+                        label.length > 12 ? label.slice(0, 11) + "…" : label;
+                      return (
+                        <g>
+                          <title>{label}</title>
+                          <text
+                            x={x}
+                            y={y + 10}
+                            textAnchor="end"
+                            fontSize={11}
+                            fill="#a1a1aa"
+                            transform={`rotate(-10,${x},${y + 10})`}
+                            style={{
+                              cursor: label.length > 12 ? "pointer" : "default",
+                            }}
+                          >
+                            {shortLabel}
+                          </text>
+                        </g>
+                      );
+                    }
+                }
                 interval={0}
                 height={40}
                 axisLine={{ stroke: "#333" }}

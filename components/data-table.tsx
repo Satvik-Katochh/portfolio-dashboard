@@ -251,23 +251,25 @@ export function DataTable({ data }: { data: any[] }) {
 
   return (
     <div className="w-full flex-col justify-start gap-6">
-      <div className="flex items-center justify-between px-4 lg:px-6 mb-6 mt-2">
-        <Select value={selectedSector} onValueChange={setSelectedSector}>
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="Filter by sector" />
-          </SelectTrigger>
-          <SelectContent>
-            {sectors.map((sector) => (
-              <SelectItem key={sector} value={sector}>
-                {sector}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <div className="flex gap-2 items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 lg:px-6 mb-6 mt-2 gap-2">
+        <div className="w-full sm:w-auto">
+          <Select value={selectedSector} onValueChange={setSelectedSector}>
+            <SelectTrigger className="w-full max-w-xs sm:w-48">
+              <SelectValue placeholder="Filter by sector" />
+            </SelectTrigger>
+            <SelectContent className="w-full max-w-xs sm:w-48 left-0 right-0">
+              {sectors.map((sector) => (
+                <SelectItem key={sector} value={sector}>
+                  {sector}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto sm:justify-end sm:ml-auto">
           <Button
             variant="outline"
-            className="font-mono cursor-default select-none"
+            className="font-mono cursor-default select-none w-full sm:w-auto"
             tabIndex={-1}
             type="button"
             asChild={false}
@@ -276,7 +278,7 @@ export function DataTable({ data }: { data: any[] }) {
           </Button>
           <Button
             variant="outline"
-            className="font-mono cursor-default select-none"
+            className="font-mono cursor-default select-none w-full sm:w-auto"
             tabIndex={-1}
             type="button"
             asChild={false}
@@ -285,7 +287,7 @@ export function DataTable({ data }: { data: any[] }) {
           </Button>
           <Button
             variant="outline"
-            className="font-mono cursor-default select-none"
+            className="font-mono cursor-default select-none w-full sm:w-auto"
             tabIndex={-1}
             type="button"
             asChild={false}
@@ -305,6 +307,7 @@ export function DataTable({ data }: { data: any[] }) {
           </Button>
         </div>
       </div>
+      <div className="mt-2" />
       <div className="overflow-x-auto px-4 lg:px-6">
         <Table>
           <TableHeader className="bg-muted sticky top-0 z-10">
