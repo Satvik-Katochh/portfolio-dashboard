@@ -21,6 +21,9 @@ export default function Home() {
             <li>Premium shadcn UI, dark/light mode</li>
             <li>Color-coded, sector-filtered portfolio table</li>
             <li>Area chart, summary cards, sector summaries</li>
+            <li>
+              Interactive Visualizations (Pie, Bar, Radar charts) in sidebar
+            </li>
             <li>Polling, caching, error handling</li>
           </ul>
         </CardContent>

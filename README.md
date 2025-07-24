@@ -10,7 +10,9 @@ A modern, real-time portfolio dashboard for Indian investors, built with Next.js
 - **Mocked P/E & Earnings:** Google Finance data is mocked (no public API)
 - **Premium UI:** shadcn/ui, Tailwind v4, dark/light mode, responsive
 - **Portfolio Table:** All key columns, color-coded gain/loss, sector filter, rupee formatting
-- **Charts:** Area chart for Invested vs. Current, themeable (yellow/violet, etc.)
+- **Charts:**
+  - Area chart for Invested vs. Current, themeable (yellow/violet, etc.)
+  - **Visualizations section (sidebar): Interactive Pie, Bar, and Radar charts**
 - **Section Cards:** Best/Worst Performer, Overall Returns, Portfolio Value
 - **Sector Summaries:** Filter and summary bar for sector-level totals
 - **Polling & Caching:** Live updates every 15s, with backend and frontend caching
@@ -41,6 +43,7 @@ A modern, real-time portfolio dashboard for Indian investors, built with Next.js
 ## 🖥️ UI/UX Approach
 
 - **shadcn/ui:** All components styled for premium, minimal look
+- - The sidebar now features a Visualizations section with interactive Pie, Bar, and Radar charts for sector analysis.
 - **Tailwind v4:** Modern color tokens, responsive, dark/light mode
 - **Charts:** Uses theme tokens for beautiful, consistent colors
 - **Accessibility:** ARIA roles, keyboard nav, screen reader support
@@ -87,35 +90,6 @@ A modern, real-time portfolio dashboard for Indian investors, built with Next.js
 - UI: [shadcn/ui](https://ui.shadcn.com/)
 - Charts: [recharts](https://recharts.org/)
 - Data: [yahoo-finance2](https://www.npmjs.com/package/yahoo-finance2)
-
----
-
-## �� Technical Approach (Story)
-
-This dashboard was built as a technical assessment for Octa Byte AI, with a focus on pragmatic, modern engineering and a premium user experience.
-
-### **Design Decisions & Challenges**
-
-- **UI/UX:** I chose shadcn/ui and Tailwind v4 for their flexibility, accessibility, and beautiful defaults. The dashboard is fully responsive, dark/light mode, and uses a theme selector for instant color changes.
-- **Data Model:** I started with a static `portfolio.json` to define the user’s holdings, then merged in live data from Yahoo Finance for CMP. All calculations (investment, present value, gain/loss, portfolio %) are done on the fly.
-- **API Integration:** Yahoo Finance has no official API, so I used the `yahoo-finance2` library (unofficial, but widely used). Google Finance has no public API, so I mocked P/E and Earnings for demo purposes.
-- **Polling & Caching:** The dashboard polls the API every 15 seconds for live updates. To avoid rate limits and improve performance, I added a simple in-memory cache to the API route (15s TTL per symbol batch).
-- **Error Handling:** If the API fails (rate limit, network, etc.), the UI shows a clear error message and a disclaimer about unofficial APIs. No silent failures.
-- **Charts:** I used recharts for the area chart, with theme tokens for color. The chart is minimal, with a premium tooltip and legend, and adapts to the selected theme.
-- **Accessibility:** All interactive elements use ARIA roles and are keyboard/screen reader friendly.
-
-### **Pragmatic Choices (Time Constraints)**
-
-- Due to time constraints, I focused on the core dashboard experience and left out advanced features like export, drag-and-drop, or persistent backend.
-- Google Finance data is mocked, as scraping or unofficial APIs are unreliable and not required for the assessment.
-- The code is clean, modular, and ready for extension (e.g., more charts, export, auth) if needed.
-
-### **How the Dashboard is Constructed**
-
-- The main dashboard page (`page.tsx`) handles polling, error handling, and layout.
-- All UI is built with shadcn/ui components for consistency and polish.
-- The table, cards, and chart are all theme-aware and use rupee formatting for Indian context.
-- The landing page (`/`) is a minimal, shadcn-style intro with a “Go to Dashboard” button.
 
 ---
 

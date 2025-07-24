@@ -5,6 +5,7 @@ import {
   IconWallet,
   IconChartBar,
   type Icon,
+  IconFlask,
 } from "@tabler/icons-react";
 
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export function NavMain({
   items,
@@ -44,12 +52,30 @@ export function NavMain({
           <SidebarMenuItem className="flex items-center gap-2">
             <SidebarMenuButton
               tooltip="Visualizations"
-              className="min-w-8 duration-200 ease-linear"
+              className="min-w-8 duration-200 ease-linear flex items-center justify-between"
               asChild
             >
-              <a href="/dashboard/charts">
-                <IconChartBar />
-                <span>Visualizations</span>
+              <a
+                href="/dashboard/charts"
+                className="flex items-center gap-2 w-full"
+              >
+                <span className="flex items-center gap-2">
+                  <IconChartBar />
+                  <span>Visualizations</span>
+                </span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Badge
+                        variant="outline"
+                        className="ml-auto flex items-center justify-center w-7 h-7 p-0"
+                      >
+                        <IconFlask className="w-4 h-4" />
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom">Beta feature</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
