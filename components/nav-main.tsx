@@ -3,6 +3,7 @@
 import {
   IconCirclePlusFilled,
   IconWallet,
+  IconChartBar,
   type Icon,
 } from "@tabler/icons-react";
 
@@ -32,9 +33,24 @@ export function NavMain({
             <SidebarMenuButton
               tooltip="Portfolio"
               className="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
+              asChild
             >
-              <IconWallet />
-              <span>Portfolio</span>
+              <a href="/dashboard">
+                <IconWallet />
+                <span>Portfolio</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem className="flex items-center gap-2">
+            <SidebarMenuButton
+              tooltip="Visualizations"
+              className="min-w-8 duration-200 ease-linear"
+              asChild
+            >
+              <a href="/dashboard/charts">
+                <IconChartBar />
+                <span>Visualizations</span>
+              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

@@ -8,9 +8,11 @@ import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { SectionCards } from "@/components/section-cards";
 import { IconClock } from "@tabler/icons-react";
 import { Progress } from "@/components/ui/progress";
+import Link from "next/link";
 
 import React, { useEffect, useState, useRef, useCallback, memo } from "react";
 import portfolio from "./portfolio.json";
+import { Button } from "@/components/ui/button";
 
 // Memoized heavy components
 const MemoSectionCards = memo(SectionCards);
@@ -172,6 +174,13 @@ export default function Page() {
                 />
               </div>
               <MemoDataTable data={data} />
+              <div className="flex justify-end px-4 lg:px-6 mt-4">
+                <Link href="/dashboard/charts">
+                  <Button variant="outline" size="sm">
+                    More Visualizations
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

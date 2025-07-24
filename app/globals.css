@@ -76,6 +76,41 @@
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
   --sidebar-border: oklch(0.923 0.003 48.717);
   --sidebar-ring: oklch(0.709 0.01 56.259);
+  --color-blue-50: #eff6ff;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #60a5fa;
+  --color-blue-400: #38bdf8;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+
+  --color-lime-50: #f7fee7;
+  --color-lime-200: #d9f99d;
+  --color-lime-300: #bef264;
+  --color-lime-400: #a3e635;
+  --color-lime-500: #84cc16;
+  --color-lime-600: #65a30d;
+  --color-lime-700: #365314;
+  --color-lime-800: #1a2e05;
+
+  --color-amber-50: #fffbeb;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e42;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #78350f;
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #27272a;
+  --color-neutral-800: #18181b;
 }
 
 .dark {
@@ -153,10 +188,20 @@ body {
 .theme-default-scaled {
   --primary: var(--color-neutral-600);
   --primary-foreground: var(--color-neutral-50);
+  --chart-1: var(--color-neutral-600);
+  --chart-2: var(--color-neutral-400);
+  --chart-3: var(--color-neutral-800);
+  --chart-4: var(--color-neutral-300);
+  --chart-5: var(--color-neutral-200);
 
   @variant dark {
     --primary: var(--color-neutral-500);
     --primary-foreground: var(--color-neutral-50);
+    --chart-1: var(--color-neutral-400);
+    --chart-2: var(--color-neutral-600);
+    --chart-3: var(--color-neutral-300);
+    --chart-4: var(--color-neutral-700);
+    --chart-5: var(--color-neutral-200);
   }
 }
 
@@ -164,10 +209,20 @@ body {
 .theme-blue-scaled {
   --primary: var(--color-blue-600);
   --primary-foreground: var(--color-blue-50);
+  --chart-1: var(--color-blue-500);
+  --chart-2: var(--color-blue-300);
+  --chart-3: var(--color-blue-700);
+  --chart-4: var(--color-blue-400);
+  --chart-5: var(--color-blue-200);
 
   @variant dark {
     --primary: var(--color-blue-500);
     --primary-foreground: var(--color-blue-50);
+    --chart-1: var(--color-blue-300);
+    --chart-2: var(--color-blue-700);
+    --chart-3: var(--color-blue-400);
+    --chart-4: var(--color-blue-200);
+    --chart-5: var(--color-blue-600);
   }
 }
 
@@ -175,10 +230,20 @@ body {
 .theme-green-scaled {
   --primary: var(--color-lime-600);
   --primary-foreground: var(--color-lime-50);
+  --chart-1: var(--color-lime-500);
+  --chart-2: var(--color-lime-300);
+  --chart-3: var(--color-lime-700);
+  --chart-4: var(--color-lime-400);
+  --chart-5: var(--color-lime-200);
 
   @variant dark {
     --primary: var(--color-lime-600);
     --primary-foreground: var(--color-lime-50);
+    --chart-1: var(--color-lime-300);
+    --chart-2: var(--color-lime-700);
+    --chart-3: var(--color-lime-400);
+    --chart-4: var(--color-lime-200);
+    --chart-5: var(--color-lime-600);
   }
 }
 
@@ -186,10 +251,20 @@ body {
 .theme-amber-scaled {
   --primary: var(--color-amber-600);
   --primary-foreground: var(--color-amber-50);
+  --chart-1: var(--color-amber-500);
+  --chart-2: var(--color-amber-300);
+  --chart-3: var(--color-amber-700);
+  --chart-4: var(--color-amber-400);
+  --chart-5: var(--color-amber-200);
 
   @variant dark {
     --primary: var(--color-amber-500);
     --primary-foreground: var(--color-amber-50);
+    --chart-1: var(--color-amber-300);
+    --chart-2: var(--color-amber-700);
+    --chart-3: var(--color-amber-400);
+    --chart-4: var(--color-amber-200);
+    --chart-5: var(--color-amber-600);
   }
 }
 
@@ -198,10 +273,20 @@ body {
   --font-sans: var(--font-mono);
   --primary: var(--color-neutral-600);
   --primary-foreground: var(--color-neutral-50);
+  --chart-1: var(--color-neutral-600);
+  --chart-2: var(--color-neutral-400);
+  --chart-3: var(--color-neutral-800);
+  --chart-4: var(--color-neutral-300);
+  --chart-5: var(--color-neutral-200);
 
   @variant dark {
     --primary: var(--color-neutral-500);
     --primary-foreground: var(--color-neutral-50);
+    --chart-1: var(--color-neutral-400);
+    --chart-2: var(--color-neutral-600);
+    --chart-3: var(--color-neutral-300);
+    --chart-4: var(--color-neutral-700);
+    --chart-5: var(--color-neutral-200);
   }
 
   .rounded-xs,
