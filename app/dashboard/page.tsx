@@ -9,13 +9,29 @@ import { SectionCards } from "@/components/section-cards";
 import { IconClock } from "@tabler/icons-react";
 import { Progress } from "@/components/ui/progress";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback, memo } from "react";
 import portfolio from "./portfolio.json";
+
+// Memoized heavy components
+const MemoSectionCards = memo(SectionCards);
+const MemoChartAreaInteractive = memo(ChartAreaInteractive);
+const MemoDataTable = memo(DataTable);
 
 export default function Page() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const cacheRef = useRef<{ [key: string]: any }>({});
+
+  // Accessibility: focus main content on load
+  const mainRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!loading && mainRef.current) {
+      mainRef.current.setAttribute("tabIndex", "-1");
+      mainRef.current.focus();
+    }
+  }, [loading]);
 
   // Separate effect for initial loading state
   useEffect(() => {
@@ -24,72 +40,106 @@ export default function Page() {
     }
   }, [data]);
 
-  useEffect(() => {
+  const fetchData = useCallback(async () => {
     const symbols = portfolio.map((stock) => stock.symbol).join(",");
     const apiUrl = `/api/stocks?symbols=${symbols}`;
-
-    const fetchData = async () => {
-      try {
-        const res = await fetch(apiUrl);
-        const apiData = await res.json();
-
-        // Merge by symbol
-        const merged = portfolio.map((stock) => {
-          const live =
-            (apiData.data || []).find(
-              (i: { symbol: string }) => i.symbol === stock.symbol
-            ) || {};
-
-          // Calculate derived fields
-          const investment = stock.purchasePrice * stock.quantity;
-          const presentValue = (live.cmp || 0) * stock.quantity;
-          const gainLoss = presentValue - investment;
-
-          return {
-            ...stock,
-            ...live,
-            investment,
-            presentValue,
-            gainLoss,
-          };
-        });
-
-        // Calculate total investment for Portfolio %
-        const totalInvestment = merged.reduce(
-          (sum, s) => sum + s.investment,
-          0
-        );
-        const withPortfolioPct = merged.map((s) => ({
-          ...s,
-          portfolioPct: totalInvestment
-            ? ((s.investment / totalInvestment) * 100).toFixed(2)
-            : "0.00",
-        }));
-
-        setData(withPortfolioPct);
-        setLastUpdated(new Date()); // Update timestamp when new data arrives
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    try {
+      setError(null);
+      // Caching: check cache first
+      if (cacheRef.current[apiUrl]) {
+        setData(cacheRef.current[apiUrl].data);
+        setLastUpdated(cacheRef.current[apiUrl].lastUpdated);
+        return;
       }
-    };
+      const res = await fetch(apiUrl);
+      if (!res.ok) throw new Error("Failed to fetch stock data");
+      const apiData = await res.json();
 
+      // Merge by symbol
+      const merged = portfolio.map((stock) => {
+        const live =
+          (apiData.data || []).find(
+            (i: { symbol: string }) => i.symbol === stock.symbol
+          ) || {};
+
+        // Calculate derived fields
+        const investment = stock.purchasePrice * stock.quantity;
+        const presentValue = (live.cmp || 0) * stock.quantity;
+        const gainLoss = presentValue - investment;
+
+        return {
+          ...stock,
+          ...live,
+          investment,
+          presentValue,
+          gainLoss,
+        };
+      });
+
+      // Calculate total investment for Portfolio %
+      const totalInvestment = merged.reduce((sum, s) => sum + s.investment, 0);
+      const withPortfolioPct = merged.map((s) => ({
+        ...s,
+        portfolioPct: totalInvestment
+          ? ((s.investment / totalInvestment) * 100).toFixed(2)
+          : "0.00",
+      }));
+
+      setData(withPortfolioPct);
+      setLastUpdated(new Date());
+      // Cache result
+      cacheRef.current[apiUrl] = {
+        data: withPortfolioPct,
+        lastUpdated: new Date(),
+      };
+    } catch (error: any) {
+      setError(
+        error?.message ||
+          "Failed to fetch data. Please try again later or check your connection."
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     // Initial fetch
     fetchData();
-
     // Set up polling interval (15 seconds)
-    const intervalId = setInterval(fetchData, 150000);
-
+    const intervalId = setInterval(fetchData, 15000);
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
-  }, []); // Empty dependency array as we don't need to track any values
+  }, [fetchData]);
 
   if (loading)
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-background"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-col items-center gap-4">
           <Progress value={70} className="w-64 h-3" />
           <span className="text-muted-foreground text-sm font-medium tracking-wide">
             Loading dashboard...
+          </span>
+        </div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div
+        className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
+        role="alert"
+        aria-live="assertive"
+      >
+        <div className="flex flex-col items-center gap-4 max-w-md text-center">
+          <span className="text-destructive text-lg font-semibold">
+            {error}
+          </span>
+          <span className="text-muted-foreground text-xs">
+            This dashboard uses unofficial APIs (Yahoo/Google Finance). Data may
+            be delayed, rate-limited, or inaccurate. Please refresh or try again
+            later.
           </span>
         </div>
       </div>
@@ -106,15 +156,22 @@ export default function Page() {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <SiteHeader />
-        <div className="flex flex-1 flex-col">
+        <div
+          className="flex flex-1 flex-col"
+          ref={mainRef}
+          tabIndex={-1}
+          aria-label="Main dashboard content"
+        >
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-              <SectionCards data={data} />
-
+              <MemoSectionCards data={data} />
               <div className="px-4 lg:px-6">
-                <ChartAreaInteractive data={data} lastUpdated={lastUpdated} />
+                <MemoChartAreaInteractive
+                  data={data}
+                  lastUpdated={lastUpdated}
+                />
               </div>
-              <DataTable data={data} />
+              <MemoDataTable data={data} />
             </div>
           </div>
         </div>
