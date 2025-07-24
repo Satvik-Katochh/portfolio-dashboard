@@ -90,31 +90,33 @@ export function ChartAreaInteractive({
               />
               <XAxis
                 dataKey="name"
-                tick={isMobile
-                  ? false
-                  : ({ x, y, payload }) => {
-                      const label = String(payload.value);
-                      const shortLabel =
-                        label.length > 12 ? label.slice(0, 11) + "…" : label;
-                      return (
-                        <g>
-                          <title>{label}</title>
-                          <text
-                            x={x}
-                            y={y + 10}
-                            textAnchor="end"
-                            fontSize={11}
-                            fill="#a1a1aa"
-                            transform={`rotate(-10,${x},${y + 10})`}
-                            style={{
-                              cursor: label.length > 12 ? "pointer" : "default",
-                            }}
-                          >
-                            {shortLabel}
-                          </text>
-                        </g>
-                      );
-                    }
+                tick={
+                  isMobile
+                    ? false
+                    : ({ x, y, payload }) => {
+                        const label = String(payload.value);
+                        const shortLabel =
+                          label.length > 12 ? label.slice(0, 11) + "…" : label;
+                        return (
+                          <g>
+                            <title>{label}</title>
+                            <text
+                              x={x}
+                              y={y + 10}
+                              textAnchor="end"
+                              fontSize={11}
+                              fill="#a1a1aa"
+                              transform={`rotate(-10,${x},${y + 10})`}
+                              style={{
+                                cursor:
+                                  label.length > 12 ? "pointer" : "default",
+                              }}
+                            >
+                              {shortLabel}
+                            </text>
+                          </g>
+                        );
+                      }
                 }
                 interval={0}
                 height={40}
@@ -136,7 +138,7 @@ export function ChartAreaInteractive({
                 }: {
                   active?: boolean;
                   payload?: any[];
-                  label?: string;
+                  label?: string | number | undefined;
                 }) => {
                   if (!active || !payload || !payload.length) return null;
                   const invested =
@@ -157,7 +159,7 @@ export function ChartAreaInteractive({
                       }}
                     >
                       <div style={{ fontWeight: 600, marginBottom: 4 }}>
-                        {label}
+                        {label !== undefined ? String(label) : ""}
                       </div>
                       <div style={{ color: "#6366f1" }}>
                         Invested: {invested.toLocaleString()}
