@@ -47,12 +47,6 @@ export default function Page() {
     const apiUrl = `/api/stocks?symbols=${symbols}`;
     try {
       setError(null);
-      // Caching: check cache first
-      if (cacheRef.current[apiUrl]) {
-        setData(cacheRef.current[apiUrl].data);
-        setLastUpdated(cacheRef.current[apiUrl].lastUpdated);
-        return;
-      }
       const res = await fetch(apiUrl);
       if (!res.ok) throw new Error("Failed to fetch stock data");
       const apiData = await res.json();
@@ -89,11 +83,6 @@ export default function Page() {
 
       setData(withPortfolioPct);
       setLastUpdated(new Date());
-      // Cache result
-      cacheRef.current[apiUrl] = {
-        data: withPortfolioPct,
-        lastUpdated: new Date(),
-      };
     } catch (error: any) {
       setError(
         error?.message ||

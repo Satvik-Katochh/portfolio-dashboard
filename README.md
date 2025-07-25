@@ -15,7 +15,7 @@ A modern, real-time portfolio dashboard for Indian investors, built with Next.js
   - **Visualizations section (sidebar): Interactive Pie, Bar, and Radar charts**
 - **Section Cards:** Best/Worst Performer, Overall Returns, Portfolio Value
 - **Sector Summaries:** Filter and summary bar for sector-level totals
-- **Polling & Caching:** Live updates every 15s, with backend and frontend caching
+- **Live Polling:** Live updates every 15s (no caching; always fetches fresh data)
 - **Error Handling:** User-friendly error messages and API disclaimers
 
 ---
@@ -36,7 +36,7 @@ A modern, real-time portfolio dashboard for Indian investors, built with Next.js
   - Fetches live CMP from Yahoo Finance (via `yahoo-finance2`)
   - Mocks P/E Ratio and Earnings (Google Finance not public)
   - Merges static and live data, calculates all derived fields
-  - In-memory cache (15s) to reduce rate limiting
+  - No caching: always fetches fresh data every 15s for up-to-date prices
 
 ---
 
@@ -79,7 +79,7 @@ A modern, real-time portfolio dashboard for Indian investors, built with Next.js
 ## 📂 Project Structure
 
 - `app/dashboard/page.tsx`: Main dashboard logic (polling, error handling, layout)
-- `app/api/stocks/route.ts`: API route for live/merged data (with caching)
+- `app/api/stocks/route.ts`: API route for live/merged data (no caching)
 - `components/`: All UI components (table, cards, chart, sidebar, etc.)
 - `app/dashboard/portfolio.json`: Portfolio template
 
