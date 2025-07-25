@@ -87,7 +87,7 @@ A modern, real-time portfolio dashboard for Indian investors, built with Next.js
 
 ## ✨ Credits
 
-- UI: [shadcn/ui](https://ui.shadcn.com/)
+- UI: [shadcn/ui](https://ui.shadcn.com/) + [OrcaDev (Youtube)](https://www.youtube.com/@orcdev)
 - Charts: [recharts](https://recharts.org/)
 - Data: [yahoo-finance2](https://www.npmjs.com/package/yahoo-finance2)
 
